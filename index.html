@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#20262d" />
+    <title>Restaurant Menu Quiz</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="setup-panel" aria-labelledby="app-title">
+        <div>
+          <p class="eyebrow">Menu training</p>
+          <h1 id="app-title">Matsuhisa Quiz</h1>
+          <p class="intro">
+            Train on dishes, sauces, glossary terms, sushi and desserts. Allergens are excluded because you said you do not need them.
+          </p>
+        </div>
+
+        <form id="quiz-form" class="settings">
+          <label for="question-count">Questions in the session</label>
+          <input id="question-count" name="question-count" type="number" min="1" max="383" value="20" />
+          <p class="field-note" id="available-count">383 questions available</p>
+
+          <label for="focus">Theme</label>
+          <select id="focus" name="focus">
+            <option value="all" selected>Mix everything</option>
+            <option value="dishes">Dishes and ingredients</option>
+            <option value="sauces">Sauces</option>
+            <option value="glossary">Glossary and fish names</option>
+            <option value="sushi">Sushi and rolls</option>
+            <option value="desserts">Desserts</option>
+          </select>
+
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty" name="difficulty">
+            <option value="hard" selected>Hard details</option>
+            <option value="balanced">Balanced</option>
+            <option value="quick">Fast recognition</option>
+          </select>
+
+          <label for="pace">Pace</label>
+          <select id="pace" name="pace">
+            <option value="review" selected>Correct after each answer</option>
+            <option value="exam">Exam mode</option>
+          </select>
+
+          <button class="primary-action" type="submit">Start session</button>
+        </form>
+
+        <dl class="data-stats">
+          <div>
+            <dt>Items</dt>
+            <dd id="item-count">0</dd>
+          </div>
+          <div>
+            <dt>Source</dt>
+            <dd>PDF 2024</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <section class="quiz-panel" aria-live="polite">
+        <div id="idle-view" class="view active">
+          <div class="empty-state">
+            <p class="eyebrow">Ready when you are</p>
+            <h2>Choose your session, then drill the misses.</h2>
+            <p>
+              Pick a theme and any number of questions. At the end, you will see every missed question with your answer and the correct answer.
+            </p>
+          </div>
+        </div>
+
+        <div id="quiz-view" class="view">
+          <header class="quiz-header">
+            <div>
+              <p class="eyebrow" id="question-meta">Question</p>
+              <h2 id="question-title"></h2>
+            </div>
+            <div class="score-pill" id="score-pill">0 / 0</div>
+          </header>
+
+          <div class="progress-track" aria-hidden="true">
+            <div id="progress-bar"></div>
+          </div>
+
+          <div id="question-body" class="question-body"></div>
+          <div id="answers" class="answers"></div>
+          <div id="feedback" class="feedback" hidden></div>
+
+          <div class="quiz-actions">
+            <button id="submit-answer" class="primary-action" type="button" disabled>Submit</button>
+            <button id="next-question" class="secondary-action" type="button" hidden>Next</button>
+          </div>
+        </div>
+
+        <div id="result-view" class="view">
+          <header class="result-header">
+            <div>
+              <p class="eyebrow">Session complete</p>
+              <h2 id="result-title"></h2>
+            </div>
+            <div class="score-pill large" id="final-score"></div>
+          </header>
+
+          <div class="result-actions">
+            <button id="retry-wrong" class="primary-action" type="button">Retry missed questions</button>
+            <button id="restart" class="secondary-action" type="button">New session</button>
+          </div>
+
+          <section class="mistakes-section" aria-labelledby="mistakes-title">
+            <h3 id="mistakes-title">Questions to review</h3>
+            <div id="mistakes-list" class="mistakes-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="data/menu-data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
