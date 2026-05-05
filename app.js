@@ -364,6 +364,14 @@ function updateAvailableCount() {
   }
 }
 
+function scrollToActiveQuiz() {
+  requestAnimationFrame(() => {
+    const top = els.quizView.getBoundingClientRect().top + window.scrollY - 12;
+    const isMobile = window.matchMedia("(max-width: 820px)").matches;
+    window.scrollTo({ top, behavior: isMobile ? "auto" : "smooth" });
+  });
+}
+
 function startQuiz(customQuestions = null) {
   const requestedCount = Math.max(1, Number(els.questionCount.value) || 20);
   state.pace = els.pace.value;
@@ -378,7 +386,7 @@ function startQuiz(customQuestions = null) {
   if (state.questions.length === 0) return;
   renderQuestion();
   showView(els.quizView);
-  els.quizView.scrollIntoView({ behavior: "smooth", block: "start" });
+  scrollToActiveQuiz();
 }
 
 function renderQuestion() {
